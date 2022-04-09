@@ -28,6 +28,12 @@ class Employee:
         self.standard_rate_pay = self.standard_band  # if self.grossPay > self.standardBand else 0
 
         if self.reg_hours > self.hours_worked:
+            self.reg_hours = self.hours_worked
+
+        self.regular_pay = self.reg_hours * self.regular_rate
+
+        if self.hours_worked > self.reg_hours:
+            self.overtime_hours_worked = self.hours_worked - self.reg_hours
         else:
             self.overtime_hours_worked = 0
 
