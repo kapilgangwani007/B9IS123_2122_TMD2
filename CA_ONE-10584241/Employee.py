@@ -1,6 +1,4 @@
 # Code is uploaded in Github : https://github.com/kapilgangwani007/B9IS123_2122_TMD2.git
-# To validate the output of each test cases, importing unittest framework.
-import unittest
 
 # defining the class Employee.
 class Employee:
@@ -113,5 +111,4 @@ class Employee:
         emp_info["PRSI"] = self.prsi
         emp_info["Net Deductions"] = self.net_deductions
         emp_info["Net Pay"] = self.net_pay
-        print(emp_info)
         return emp_info
