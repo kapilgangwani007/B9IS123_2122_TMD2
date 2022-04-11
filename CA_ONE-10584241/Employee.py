@@ -64,7 +64,7 @@ class Employee:
         self.gross_pay = self.regular_pay + self.overtime_pay
 
         # higher rate pay depends on the gross pay and staandard band, if standard pay is greater than gross pay then higher rate pay is 0
-        # otherwise its a substract of standard rate from gross pay.
+        # otherwise its a substraction of standard rate from gross pay.
         if self.gross_pay > self.standard_band:
             self.higher_rate_pay = self.gross_pay - self.standard_rate_pay
             # As given standard tax is 20% of standard rate pay
@@ -92,9 +92,10 @@ class Employee:
         # net deduction is sum of net tax and PRSI
         self.net_deductions = round(self.net_tax + self.prsi, 2)
 
-        # net pay is substract of net deduction from gross pay
+        # net pay is substraction of net deduction from gross pay
         self.net_pay = round(self.gross_pay - self.net_deductions, 2)
 
+        # Add employee data in the dictionary variable
         emp_info["Staff Id"] = self.Staff_id
         emp_info["First Name"] = self.first_name
         emp_info["Last Name"] = self.last_name
