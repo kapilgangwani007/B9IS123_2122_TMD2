@@ -199,4 +199,3 @@ class TestSalary(unittest.TestCase):
         given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
         result = given_data.computePayment(37, '31/12/2021')
         self.assertLessEqual(result['Regular Hours Worked'], result["Regular Hours Worked"] + result["Overtime Hours Worked"])
-
