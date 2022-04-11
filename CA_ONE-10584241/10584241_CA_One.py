@@ -8,7 +8,7 @@ import unittest
 class Employee:
 
     # Initialize to the data members of the class using constructor.
-    def __init__(self, Staff_id, first_name, last_name, reg_hours, hourly_rate, ot_multiple, tax_credit, standard_band):
+    def __init__(self, Staff_id, last_name, first_name, reg_hours, hourly_rate, ot_multiple, tax_credit, standard_band):
         # To access the variable in globally in class, defining self.
         # initialising the variable
         self.Staff_id = Staff_id
@@ -97,8 +97,7 @@ class Employee:
 
         # Add employee data in the dictionary variable
         emp_info["Staff Id"] = self.Staff_id
-        emp_info["First Name"] = self.first_name
-        emp_info["Last Name"] = self.last_name
+        emp_info["Name"] = self.first_name + ' ' + self.last_name
         emp_info["Date"] = self.date
         emp_info['Regular Hours Worked'] = self.reg_hours
         emp_info["Overtime Hours Worked"] = self.overtime_hours_worked
