@@ -5,7 +5,7 @@ import unittest
 class Employee:
 
     # Initialize to the data members of the class using constructor.
-    def _init_(self, Staff_id, first_name, last_name, reg_hours, hourly_rate, ot_multiple, tax_credit, standard_band):
+    def __init__(self, Staff_id, first_name, last_name, reg_hours, hourly_rate, ot_multiple, tax_credit, standard_band):
         # To access the variable in globally in class, defining self.
         # initialising the variable
         self.Staff_id = Staff_id
@@ -27,7 +27,7 @@ class Employee:
         emp_info = {}
 
         # regular rate is equal to the rate per hour which is already given
-        self.regular_rate = self.hourlyRate
+        self.regular_rate = self.hourly_rate
 
         # standard rate is equal to the standard band which is already given
         self.standard_rate_pay = self.standard_band  # if self.grossPay > self.standardBand else 0
@@ -47,22 +47,14 @@ class Employee:
         else:
             self.overtime_hours_worked = 0
 
-        if self.overtime_hours_worked != 0 and self.hours_worked > self.reg_hours:
-            # round is used to round off the amount with 2 decimal place.
-            self.overtime_rate = round(self.regular_rate + (self.ot_multiple * self.overtime_hours_worked),2)
-        else:
-            self.overtime_rate = 0
+        self.overtime_rate = self.ot_multiple * self.hourly_rate
 
-        #self.overtime_pay = self.overtime_rate * self.overtime_hours_worked if self.hoursWorked > self.regHours else 0
-
-        # overtime rate depends on both hours worked and regular hours, if regular hours is greater than hours worked then overtime pay is 0
+        # overtime pay depends on both hours worked and regular hours, if regular hours is greater than hours worked then overtime pay is 0
         # otherwise its multiple of overtime rate and overtime hours worked.
         if self.overtime_rate != 0 and self.hours_worked > self.reg_hours:
             self.overtime_pay = self.overtime_rate * self.overtime_hours_worked
         else:
             self.overtime_pay = 0
-
-        #self.overtime_pay = self.overtime_rate * self.overtime_hours_worked if self.hours_worked > self.reg_hours else 0
 
         # Gross pay is the sum of regular pay and overtime pay if no overtime is done by person than overtime pay is 0.
         self.gross_pay = self.regular_pay + self.overtime_pay
@@ -71,11 +63,11 @@ class Employee:
         # otherwise its a substract of standard rate from gross pay.
         if self.gross_pay > self.standard_band:
             self.higher_rate_pay = self.gross_pay - self.standard_rate_pay
+            # As given standard tax is 20% of standard rate pay
+            self.standard_tax = round(self.standard_rate_pay * 0.20, 2)
         else:
+            self.standard_tax = self.gross_pay * 0.20
             self.higher_rate_pay = 0
-
-        # As given standard tax is 20% of standard rate pay
-        self.standard_tax = round(self.standard_rate_pay * 0.20,2)
 
         # As given higher tax is 40% of higher rate pay
         self.higher_tax = round(self.higher_rate_pay * 0.40,2)
@@ -122,42 +114,3 @@ class Employee:
         emp_info["Net Pay"] = self.net_pay
         print(emp_info)
         return emp_info
-
-# Test class to validate some scenarios of above script.
-class TestSalary(unittest.TestCase):
-
-    # To validate, net pay should not be greater than gross pay.
-    def test_net_pay_cannot_exceed_gross_pay(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertLessEqual(result['Net Pay'], result['Gross Pay'])
-
-    # To validate, higher tax should not be less than 0.
-    def test_higher_tax_cannot_be_negative(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertGreater(result['Higher Tax'], -1)
-
-    # To validate, overtime hours should not be less than 0.
-    def test_overtime_hours_cannot_be_negative(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertGreater(result['Overtime Hours Worked'], -1)
-
-    # To validate, overtime pay should not be less than 0.
-    def test_overtime_pay_cannot_be_negative(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertGreater(result['Overtime Pay'], -1)
-
-    # To validate, net pay should not be less than 0.
-    def test_net_pay_cannot_be_negative(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertGreater(result['Net Pay'], -1)
-
-    # To validate, regular hours should not be greater than hours worked.
-    def test_regular_hours_cannot_be_more_than_hours_worked(self):
-        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
-        result = given_data.computePayment(42, '31/12/2021')
-        self.assertLessEqual(result['Regular Hours Worked'], result["Regular Hours Worked"] + result["Overtime Hours Worked"])
