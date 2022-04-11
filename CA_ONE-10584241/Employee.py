@@ -1,5 +1,9 @@
 # Code is uploaded in Github : https://github.com/kapilgangwani007/B9IS123_2122_TMD2.git
+# In this script, we are calculating the tax deduction, gross pay and net pay of a person
+#  based on the hours he/she has worked on a specific date.
 
+# To validate the output of each test cases, importing unittest framework.
+import unittest
 # defining the class Employee.
 class Employee:
 
@@ -46,6 +50,7 @@ class Employee:
         else:
             self.overtime_hours_worked = 0
 
+        # overtime rate is the multiple of overtime per hour rate and hourly rate.
         self.overtime_rate = self.ot_multiple * self.hourly_rate
 
         # overtime pay depends on both hours worked and regular hours, if regular hours is greater than hours worked then overtime pay is 0
@@ -111,4 +116,86 @@ class Employee:
         emp_info["PRSI"] = self.prsi
         emp_info["Net Deductions"] = self.net_deductions
         emp_info["Net Pay"] = self.net_pay
+        print(emp_info)
         return emp_info
+
+
+# Test class to validate some scenarios of above script.
+class TestSalary(unittest.TestCase):
+
+    # To validate, net pay should be or equal to the gross pay.
+    def testNetPayCannotExceedGrossPay(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(22, '31/12/2021')
+        self.assertLessEqual(result['Net Pay'], result['Gross Pay'])
+
+    # To validate, higher tax should be greater than or equal to 0.
+    def testHigherTaxCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(42, '31/12/2021')
+        self.assertGreaterEqual(result['Higher Tax'], 0)
+
+    # To validate, overtime hours should be greater than or equal to 0.
+    def testOvertimeHoursCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(0, '31/12/2021')
+        self.assertGreaterEqual(result['Overtime Hours Worked'], 0)
+
+    # To validate, overtime pay should be greater than or equal to 0.
+    def testOvertimePayCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(2, '31/12/2021')
+        self.assertGreaterEqual(result['Overtime Pay'], 0)
+
+    # To validate, net pay should greater than or equal to 0.
+    def testNetPayCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(10, '31/12/2021')
+        self.assertGreaterEqual(result['Net Pay'], 0)
+
+    # To validate, regular hours should be less than or equal to worked hours.
+    def testRegularHoursCannotBeMoreThanHoursWorked(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(37, '31/12/2021')
+        self.assertLessEqual(result['Regular Hours Worked'], result["Regular Hours Worked"] + result["Overtime Hours Worked"])
+
+
+# Test class to validate some scenarios of above script.
+class TestSalary(unittest.TestCase):
+
+    # To validate, net pay should be or equal to the gross pay.
+    def testNetPayCannotExceedGrossPay(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(22, '31/12/2021')
+        self.assertLessEqual(result['Net Pay'], result['Gross Pay'])
+
+    # To validate, higher tax should be greater than or equal to 0.
+    def testHigherTaxCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(42, '31/12/2021')
+        self.assertGreaterEqual(result['Higher Tax'], 0)
+
+    # To validate, overtime hours should be greater than or equal to 0.
+    def testOvertimeHoursCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(0, '31/12/2021')
+        self.assertGreaterEqual(result['Overtime Hours Worked'], 0)
+
+    # To validate, overtime pay should be greater than or equal to 0.
+    def testOvertimePayCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(2, '31/12/2021')
+        self.assertGreaterEqual(result['Overtime Pay'], 0)
+
+    # To validate, net pay should greater than or equal to 0.
+    def testNetPayCannotBeNegative(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(10, '31/12/2021')
+        self.assertGreaterEqual(result['Net Pay'], 0)
+
+    # To validate, regular hours should be less than or equal to worked hours.
+    def testRegularHoursCannotBeMoreThanHoursWorked(self):
+        given_data = Employee(10584241, 'Gangwani', 'Kapil', 37, 16, 1.5, 72, 710)
+        result = given_data.computePayment(37, '31/12/2021')
+        self.assertLessEqual(result['Regular Hours Worked'], result["Regular Hours Worked"] + result["Overtime Hours Worked"])
+
