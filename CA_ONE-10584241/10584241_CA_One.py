@@ -95,7 +95,7 @@ class Employee:
         # net pay is substraction of net deduction from gross pay
         self.net_pay = round(self.gross_pay - self.net_deductions, 2)
 
-        # Add employee data in the dictionary variable
+        # Adding employee data in the dictionary variable
         emp_info["Staff Id"] = self.Staff_id
         emp_info["Name"] = self.first_name + ' ' + self.last_name
         emp_info["Date"] = self.date
